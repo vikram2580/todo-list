@@ -1,68 +1,55 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 
-class Todo extends Component {
-  constructor() {
-    super();
-    this.state = {
-      todos: [],
-      newTodo: "",
-    };
-  }
-  addTodo = (task) => {
-    this.setState((prev) => {
-      return {
-        todos: [...prev.todos, task],
-        newTodo: "",
-      };
-    });
+const Todo = () => {
+  const [todos, setTodos] = useState([]);
+  const [newTodo, setNewTodo] = useState();
+
+  const handleInputChange = (event) => {
+    setNewTodo(event?.target?.value);
   };
-  handleInputChange = (event) => {
-    this.setState({ newTodo: event?.target?.value });
+  const handleAddTodo = () => {
+    if (newTodo?.trim() === "") return;
+    setTodos([...todos, newTodo]);
+    setNewTodo("");
   };
-  handleAddTodo = () => {
-    if (this.state.newTodo?.trim() === "") return;
-    this.addTodo(this.state.newTodo);
-  };
-  removeTodo = (index) => {
-    const updateTodos = [...this.state.todos];
+
+  const removeTodo = (index) => {
+    const updateTodos = [...todos];
     updateTodos?.splice(index, 1);
-    console.log("dafadfadf", updateTodos);
-    this.setState({ todos: updateTodos });
+    setTodos(updateTodos);
   };
 
-  render() {
-    return (
-      <div style={{ textAlign: "center", color: "darkblue" }}>
-        <h1>My To-Do List</h1>
-        <div style={{ textAlign: "center" }}>
-          <input
-            type='text'
-            placeholder='Add a new task'
-            style={{ padding: "5px" }}
-            onChange={this.handleInputChange}
-            value={this.state.newTodo}
-          />
-          <button
-            style={{
-              backgroundColor: "darkblue",
-              color: "white",
-              padding: "5px 10px",
-              border: "none",
-              marginLeft: "5px",
-            }}
-            onClick={this.handleAddTodo}
-          >
-            Add
-          </button>
-        </div>
-        <div>
+  return (
+    <div style={{ textAlign: "center", color: "darkblue" }}>
+      <h1>My To-Do List using React hook</h1>
+      <div style={{ textAlign: "center" }}>
+        <input
+          type='text'
+          placeholder='Add a new task'
+          style={{ padding: "5px" }}
+          onChange={handleInputChange}
+          value={newTodo}
+        />
+        <button
+          style={{
+            backgroundColor: "darkblue",
+            color: "white",
+            padding: "5px 10px",
+            border: "none",
+            marginLeft: "5px",
+          }}
+          onClick={handleAddTodo}
+        >
+          Add
+        </button>
+      </div>
+      <div>
         <ul style={{ listStyleType: "none", paddingLeft: "20px" }}>
           {/* Task items will be added here */}
-          {this.state.todos?.map((item, index) => (
+          {todos?.map((item, index) => (
             <li key={index} style={{ padding: "5px" }}>
               {item}
               <button
-                
                 style={{
                   backgroundColor: "darkblue",
                   color: "white",
@@ -71,7 +58,7 @@ class Todo extends Component {
                   marginLeft: "5px",
                 }}
                 onClick={() => {
-                  this.removeTodo(index);
+                  removeTodo(index);
                   console.log("tjisjfdij");
                 }}
               >
@@ -80,10 +67,9 @@ class Todo extends Component {
             </li>
           ))}
         </ul>
-        </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default Todo;

@@ -1,5 +1,7 @@
 import React, { Component } from "react";
+import logo from "./logo.svg";
 import "./App.css";
+import Todo from "./components/Todo";
 
 
 class App extends Component {
@@ -44,56 +46,7 @@ class App extends Component {
 
     return (
       <div className='App'>
-        <div style={{ textAlign: "center", color: "darkblue" }}>
-          <h1>My To-Do List</h1>
-          <div style={{ textAlign: "center" }}>
-            <form onSubmit={this.handleSubmit}>
-              <input
-                type='text'
-                placeholder='Add a new task'
-                style={{ padding: "5px" }}
-                onChange={this.handleInputChange}
-                value={this.state.newTodo}
-              />
-              <button
-                type='submit'
-                style={{
-                  backgroundColor: "darkblue",
-                  color: "white",
-                  padding: "5px 10px",
-                  border: "none",
-                  marginLeft: "5px",
-                }}
-              >
-                Add
-              </button>
-            </form>
-          </div>
-          <div>
-            <ul style={{ listStyleType: "none", paddingLeft: "20px" }}>
-              {/* Task items will be added here */}
-              {this.state.todos?.map((item, index) => (
-                <li key={index} style={{ padding: "5px" }}>
-                  {item}
-                  <button
-                    style={{
-                      backgroundColor: "darkblue",
-                      color: "white",
-                      padding: "5px 10px",
-                      border: "none",
-                      marginLeft: "5px",
-                    }}
-                    onClick={() => {
-                      this.removeTodo(index);
-                    }}
-                  >
-                    Remove
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
+        <Todo />
       </div>
     );
   }
